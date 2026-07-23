@@ -1,0 +1,493 @@
+{
+  "metadata": {
+    "projectInfo": {
+      "name": "Electric Motorcycle Z1 - Main Harness",
+      "description": "Central harness, from ECU to critical sensors. MotoStudents project.",
+      "startDate": "2026-01-15",
+      "vehicleModel": "EMoto-Z1 Prototype v1"
+    },
+    "lastSave": "2026-07-22T10:00:00Z",
+    "savedBy": "leo",
+    "version": 5,
+    "schema": {
+      "containers": {
+        "required": ["id", "type", "position", "size"],
+        "recommended": ["name", "owner", "sectionRef"]
+      },
+      "connectors": {
+        "required": ["id", "type", "gender", "mountType", "edgeSide", "parent_id", "pins"],
+        "recommended": ["name", "owner", "modelRef"]
+      },
+      "wires": {
+        "required": ["id", "type", "from", "to", "net"],
+        "recommended": ["name", "owner", "gauge", "color", "wireTypeRef"]
+      },
+      "mates": {
+        "required": ["id", "type", "from", "to", "net"],
+        "recommended": ["name", "owner", "pinMapping"]
+      },
+      "rules": {
+        "id": { "unique": true, "pattern": "^[TCWM]\\d{3}$" },
+        "containers.parent_id": { "ref": "containers" },
+        "connectors.parent_id": { "ref": "containers" },
+        "connectors.modelRef": { "ref": "connectorModels" },
+        "connectors.owner": { "ref": "people" },
+        "wires.from.connector": { "ref": "connectors" },
+        "wires.to.connector": { "ref": "connectors" },
+        "wires.net": { "ref": "nets" },
+        "wires.wireTypeRef": { "ref": "wireTypes" },
+        "wires.owner": { "ref": "people" },
+        "mates.from.connector": { "ref": "connectors" },
+        "mates.to.connector": { "ref": "connectors" },
+        "mates.net": { "ref": "nets" },
+        "mates.owner": { "ref": "people" }
+      }
+    },
+    "catalogs": {
+      "people": {
+        "leo": { "name": "Leo" },
+        "martin": { "name": "Martin" },
+        "nico": { "name": "Nico" }
+      },
+      "sections": {
+        "ccu": { "name": "Central Control Unit" },
+        "sensors": { "name": "Safety Sensors" },
+        "power": { "name": "Power Distribution" }
+      },
+      "connectorModels": {
+        "MOLEX_2P_MALE": {
+          "manufacturer": "Molex",
+          "partNumber": "02-99-1021",
+          "pins": 2,
+          "gender": "male",
+          "type": "Wire-to-Board",
+          "datasheetUrl": "http://example.com/molex_2p_m.pdf",
+          "specs": { "maxCurrent": "4A", "voltageRating": "250V" }
+        },
+        "MOLEX_2P_FEMALE": {
+          "manufacturer": "Molex",
+          "partNumber": "02-99-2021",
+          "pins": 2,
+          "gender": "female",
+          "type": "Wire-to-Board",
+          "datasheetUrl": "http://example.com/molex_2p_f.pdf",
+          "specs": { "maxCurrent": "4A", "voltageRating": "250V" }
+        },
+        "GX12_2P_MALE": {
+          "manufacturer": "Various",
+          "partNumber": "GX12-2P-M",
+          "pins": 2,
+          "gender": "male",
+          "type": "Circular",
+          "datasheetUrl": null,
+          "specs": {}
+        },
+        "GX12_2P_FEMALE": {
+          "manufacturer": "Various",
+          "partNumber": "GX12-2P-F",
+          "pins": 2,
+          "gender": "female",
+          "type": "Circular",
+          "datasheetUrl": null,
+          "specs": {}
+        },
+        "GX12_4P_MALE": {
+          "manufacturer": "Various",
+          "partNumber": "GX12-4P-M",
+          "pins": 4,
+          "gender": "male",
+          "type": "Circular",
+          "datasheetUrl": null,
+          "specs": {}
+        },
+        "GX12_4P_FEMALE": {
+          "manufacturer": "Various",
+          "partNumber": "GX12-4P-F",
+          "pins": 4,
+          "gender": "female",
+          "type": "Circular",
+          "datasheetUrl": null,
+          "specs": {}
+        },
+        "MOLEX_5P_MALE": {
+          "manufacturer": "Molex",
+          "partNumber": "02-99-1051",
+          "pins": 5,
+          "gender": "male",
+          "type": "Wire-to-Board",
+          "datasheetUrl": null,
+          "specs": {}
+        },
+        "MOLEX_5P_FEMALE": {
+          "manufacturer": "Molex",
+          "partNumber": "02-99-2051",
+          "pins": 5,
+          "gender": "female",
+          "type": "Wire-to-Board",
+          "datasheetUrl": null,
+          "specs": {}
+        }
+      },
+      "wireTypes": {
+        "AWG22_SHIELDED": {
+          "unit": "AWG",
+          "shielded": true,
+          "insulationType": "XLPO",
+          "temperatureRating": "125°C",
+          "standards": ["SAE J1128"]
+        },
+        "AWG22_UNSHIELDED": {
+          "unit": "AWG",
+          "shielded": false,
+          "insulationType": "XLPO",
+          "temperatureRating": "105°C",
+          "standards": ["SAE J1128"]
+        },
+        "MM2_0.5_SHIELDED": {
+          "unit": "mm2",
+          "shielded": true,
+          "insulationType": "XLPO",
+          "temperatureRating": "125°C",
+          "standards": ["ISO 6722"]
+        }
+      },
+      "nets": {
+        "GND": {
+          "name": "System Ground",
+          "signalType": "ground",
+          "voltage": "0V",
+          "colorCode": "black",
+          "description": "System ground"
+        }
+      },
+      "colorPalette": {
+        "black": "#000000",
+        "red": "#dc2626",
+        "blue": "#2563eb",
+        "green": "#16a34a",
+        "yellow": "#eab308",
+        "orange": "#ea580c",
+        "white": "#f5f5f5",
+        "gray": "#6b7280",
+        "brown": "#92400e",
+        "violet": "#7c3aed",
+        "Green/White": "#22c55e",
+        "White/Green": "#e5e7eb"
+      }
+    }
+  },
+  "data": {
+    "containers": [
+      {
+        "id": "T100",
+        "type": "system",
+        "name": "Electric Motorcycle",
+        "parent_id": null,
+        "designator": "EMOTO-Z1",
+        "position": { "x": 50, "y": 50 },
+        "size": { "width": 2600, "height": 1200 },
+        "owner": "leo",
+        "sectionRef": null,
+        "notes": []
+      },
+      {
+        "id": "T200",
+        "type": "enclosure",
+        "name": "Box 1",
+        "parent_id": "T100",
+        "designator": "BOX1",
+        "position": { "offsetX": 90, "offsetY": 110 },
+        "size": { "width": 950, "height": 1000 },
+        "owner": "martin",
+        "sectionRef": "ccu",
+        "notes": []
+      },
+      {
+        "id": "T201",
+        "type": "enclosure",
+        "name": "Box 2",
+        "parent_id": "T100",
+        "designator": "BOX2",
+        "position": { "offsetX": 1593, "offsetY": 122 },
+        "size": { "width": 950, "height": 1000 },
+        "owner": "nico",
+        "sectionRef": "sensors",
+        "notes": []
+      },
+      {
+        "id": "T300",
+        "type": "pcb",
+        "name": "PCB 1",
+        "parent_id": "T200",
+        "designator": "PCB1",
+        "position": { "offsetX": 80, "offsetY": 100 },
+        "size": { "width": 368, "height": 837 },
+        "owner": "martin",
+        "sectionRef": "ccu",
+        "notes": []
+      },
+      {
+        "id": "T301",
+        "type": "pcb",
+        "name": "PCB 2",
+        "parent_id": "T201",
+        "designator": "PCB2",
+        "position": { "offsetX": 427, "offsetY": 117 },
+        "size": { "width": 472, "height": 817 },
+        "owner": "nico",
+        "sectionRef": "sensors",
+        "notes": []
+      }
+    ],
+    "connectors": [
+      {
+        "id": "C001",
+        "type": "connector",
+        "name": "Molex 2P",
+        "parent_id": "T300",
+        "designator": "J1",
+        "pins": 2,
+        "gender": "male",
+        "mountType": "fixed",
+        "edgeSide": "right",
+        "offset": 100,
+        "size": { "width": 180, "height": 115 },
+        "matedId": "M001",
+        "modelRef": "MOLEX_2P_MALE",
+        "owner": "martin",
+        "notes": []
+      },
+      {
+        "id": "C002",
+        "type": "connector",
+        "name": "Molex 2P",
+        "parent_id": "T200",
+        "designator": "J2",
+        "pins": 2,
+        "gender": "female",
+        "mountType": "flying",
+        "edgeSide": "left",
+        "offset": null,
+        "size": { "width": 180, "height": 115 },
+        "matedId": "M001",
+        "modelRef": "MOLEX_2P_FEMALE",
+        "owner": "martin",
+        "notes": []
+      },
+      {
+        "id": "C003",
+        "type": "connector",
+        "name": "GX12",
+        "parent_id": "T200",
+        "designator": "J3",
+        "pins": 2,
+        "gender": "female",
+        "mountType": "fixed",
+        "edgeSide": "right",
+        "offset": 740,
+        "size": { "width": 180, "height": 115 },
+        "matedId": "M002",
+        "modelRef": "GX12_2P_FEMALE",
+        "owner": "martin",
+        "notes": []
+      },
+      {
+        "id": "C004",
+        "type": "connector",
+        "name": "GX12",
+        "parent_id": "T100",
+        "designator": "J4",
+        "pins": 2,
+        "gender": "male",
+        "mountType": "flying",
+        "edgeSide": "left",
+        "offset": null,
+        "size": { "width": 180, "height": 115 },
+        "matedId": "M002",
+        "modelRef": "GX12_2P_MALE",
+        "owner": "leo",
+        "notes": []
+      },
+      {
+        "id": "C005",
+        "type": "connector",
+        "name": "GX12 4P",
+        "parent_id": "T100",
+        "designator": "J5",
+        "pins": 4,
+        "gender": "male",
+        "mountType": "flying",
+        "edgeSide": "right",
+        "offset": null,
+        "size": { "width": 180, "height": 115 },
+        "matedId": "M003",
+        "modelRef": "GX12_4P_MALE",
+        "owner": "leo",
+        "notes": []
+      },
+      {
+        "id": "C006",
+        "type": "connector",
+        "name": "GX12 4P",
+        "parent_id": "T201",
+        "designator": "J6",
+        "pins": 4,
+        "gender": "female",
+        "mountType": "fixed",
+        "edgeSide": "left",
+        "offset": 728,
+        "size": { "width": 180, "height": 115 },
+        "matedId": "M003",
+        "modelRef": "GX12_4P_FEMALE",
+        "owner": "nico",
+        "notes": []
+      },
+      {
+        "id": "C007",
+        "type": "connector",
+        "name": "Molex 5P",
+        "parent_id": "T201",
+        "designator": "J7",
+        "pins": 5,
+        "gender": "male",
+        "mountType": "flying",
+        "edgeSide": "left",
+        "offset": null,
+        "size": { "width": 180, "height": 115 },
+        "matedId": "M004",
+        "modelRef": "MOLEX_5P_MALE",
+        "owner": "nico",
+        "notes": []
+      },
+      {
+        "id": "C008",
+        "type": "connector",
+        "name": "Molex 5P",
+        "parent_id": "T301",
+        "designator": "J8",
+        "pins": 5,
+        "gender": "female",
+        "mountType": "fixed",
+        "edgeSide": "right",
+        "offset": 71,
+        "size": { "width": 180, "height": 115 },
+        "matedId": "M004",
+        "modelRef": "MOLEX_5P_FEMALE",
+        "owner": "nico",
+        "notes": []
+      },
+      {
+        "id": "C009",
+        "type": "connector",
+        "name": "Molex 2P",
+        "parent_id": "T301",
+        "designator": "J9",
+        "pins": 2,
+        "gender": "female",
+        "mountType": "fixed",
+        "edgeSide": "left",
+        "offset": 251,
+        "size": { "width": 180, "height": 115 },
+        "matedId": null,
+        "modelRef": "MOLEX_2P_FEMALE",
+        "owner": "nico",
+        "notes": [
+          {
+            "date": "2026-07-12",
+            "user": "leo",
+            "text": "Reserve for auxiliary headlight"
+          }
+        ]
+      }
+    ],
+    "wires": [
+      {
+        "id": "W001",
+        "type": "wired",
+        "from": { "connector": "C002", "pin": 1 },
+        "to": { "connector": "C003", "pin": 1 },
+        "net": "GND",
+        "length": 150,
+        "gauge": 22,
+        "gaugeUnit": "AWG",
+        "color": "black",
+        "thickness": 2,
+        "wireTypeRef": "AWG22_SHIELDED",
+        "owner": "martin",
+        "notes": []
+      },
+      {
+        "id": "W002",
+        "type": "wired",
+        "from": { "connector": "C004", "pin": 1 },
+        "to": { "connector": "C005", "pin": 1 },
+        "net": "GND",
+        "length": 400,
+        "gauge": 22,
+        "gaugeUnit": "AWG",
+        "color": "black",
+        "thickness": 2,
+        "wireTypeRef": "AWG22_UNSHIELDED",
+        "owner": "leo",
+        "notes": []
+      },
+      {
+        "id": "W003",
+        "type": "wired",
+        "from": { "connector": "C006", "pin": 1 },
+        "to": { "connector": "C007", "pin": 2 },
+        "net": "GND",
+        "length": 180,
+        "gauge": 22,
+        "gaugeUnit": "AWG",
+        "color": "black",
+        "thickness": 2,
+        "wireTypeRef": "AWG22_SHIELDED",
+        "owner": "nico",
+        "notes": []
+      }
+    ],
+    "mates": [
+      {
+        "id": "M001",
+        "type": "mated",
+        "from": { "connector": "C001", "pin": 1 },
+        "to": { "connector": "C002", "pin": 1 },
+        "net": "GND",
+        "pinMapping": "direct",
+        "owner": "martin",
+        "notes": []
+      },
+      {
+        "id": "M002",
+        "type": "mated",
+        "from": { "connector": "C004", "pin": 1 },
+        "to": { "connector": "C003", "pin": 1 },
+        "net": "GND",
+        "pinMapping": "direct",
+        "owner": "leo",
+        "notes": []
+      },
+      {
+        "id": "M003",
+        "type": "mated",
+        "from": { "connector": "C005", "pin": 1 },
+        "to": { "connector": "C006", "pin": 1 },
+        "net": "GND",
+        "pinMapping": "direct",
+        "owner": "nico",
+        "notes": []
+      },
+      {
+        "id": "M004",
+        "type": "mated",
+        "from": { "connector": "C007", "pin": 2 },
+        "to": { "connector": "C008", "pin": 2 },
+        "net": "GND",
+        "pinMapping": null,
+        "owner": "nico",
+        "notes": []
+      }
+    ]
+  }
+}
